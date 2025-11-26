@@ -20,6 +20,8 @@ import alertRoutes from './routes/alert.js';
 import healthRoutes from './routes/health.js';
 import validateEnv from './config/validateEnv.js';
 import behaviorRoutes from './routes/behavior.js';
+import { act } from 'react';
+import { error } from 'console';
 
 // Load environment variables
 dotenv.config();
@@ -53,6 +55,12 @@ const apiLimiter = rateLimit({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', apiLimiter);
+app.get('/', (req, res) => {
+  res.send({
+    activeStatus: true,
+    error: false,
+  });
+})
 
 // Serve static files for uploads
 const __filename = fileURLToPath(import.meta.url);
